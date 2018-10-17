@@ -7,6 +7,6 @@ var app = express();
 
 app.use(express.static(publicPath)); //runs app using publicPath
 
-app.listen(PORT, () => {
-  console.log(`Started up at port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Started up at port ${port}`);
 })
