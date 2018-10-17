@@ -11,13 +11,23 @@ var io = socketIO(server);
 
 app.use(express.static(publicPath)); //runs app using publicPath
 
-io.on('connection', (socket) => {
+io.on('connection', (socket) => { //register event listener;
   console.log('New user connected');
+
+  socket.emit('newMessage', {
+    from: 'Mantas',
+    text: 'Whats up guys',
+    createdAt: 123
+  });
+
+  socket.on('createMessage', newMessage => {
+    console.log('CreatedMessage', newMessage);
+  })
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   })
-}) //register event listener;
+})
 
 server.listen(port, () => {
   console.log(`Started up at port ${port}`);
