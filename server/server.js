@@ -14,14 +14,22 @@ app.use(express.static(publicPath)); //runs app using publicPath
 io.on('connection', (socket) => { //register event listener;
   console.log('New user connected');
 
-  socket.emit('newMessage', {
-    from: 'Mantas',
-    text: 'Whats up guys',
-    createdAt: 123
-  });
+  // socket.emit('newMessage', {
+  //   from: 'Mantas',
+  //   text: 'Whats up guys',
+  //   createdAt: 123
+  // });
+
+  //socket.emit // emits message to single connection
+  //io.emit // emits message to every single connection
 
   socket.on('createMessage', newMessage => {
     console.log('CreatedMessage', newMessage);
+    io.emit('newMessage', {
+      from: newMessage.from,
+      text: newMessage.text,
+      createdAt: new Date().getTime()
+    });
   })
 
   socket.on('disconnect', () => {
