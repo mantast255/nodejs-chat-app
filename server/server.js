@@ -24,9 +24,10 @@ io.on('connection', (socket) => { //register event listener;
   //io.emit // emits message to every single connection
   //broadcasting //emitting message to everyone except one person;
 
-  socket.on('createMessage', newMessage => {
+  socket.on('createMessage', (newMessage, callback) => {
     console.log('CreatedMessage', newMessage);
     io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
+    callback('This is from the server.');
     // socket.broadcast.emit('newMessage', { //sends message to everyone except this socket.
     //   from: newMessage.from,
     //   text: newMessage.text,

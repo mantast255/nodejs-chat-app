@@ -2,11 +2,6 @@ var socket = io(); // initiating the req from client to server to open web socke
 
 socket.on('connect', function()  {
   console.log('Connected to server');
-
-  // socket.emit('createMessage', {
-  //   to: 'My friends',
-  //   text: 'Hello DUUUDES'
-  // })
 });
 
 socket.on('disconnect', function() {
@@ -15,4 +10,18 @@ socket.on('disconnect', function() {
 
 socket.on('newMessage', function(message) {
   console.log('You Got a new message', message);
+  var li = jQuery('<li></li>');
+  li.text(`${message.from}: ${message.text}`);
+
+  jQuery('#messages').append(li);
+});
+
+jQuery('#message-form').on('submit', function(e) {
+  e.preventDefault();
+
+  socket.emit('createMessage', {
+    from: 'User',
+    text: jQuery('[name=message]').val()
+  }, function() {
+  });
 });
